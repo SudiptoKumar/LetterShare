@@ -1,0 +1,861 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 262.1 83.3% 57.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #fff0f5; /* Light pink background */
+    min-height: 100vh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* Improved scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    display: none; /* Hide scrollbar completely */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(147, 51, 234, 0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(147, 51, 234, 0.5);
+  }
+}
+
+@layer components {
+  /* Floating Navigation Styles */
+  .floating-nav-container {
+    position: fixed;
+    top: 16px; /* Positioned at the top with space */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 50;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    pointer-events: none; /* This ensures clicks pass through the container but not the nav */
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .floating-nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    pointer-events: auto; /* This ensures the nav itself receives clicks */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    max-width: 90%;
+    width: auto;
+  }
+
+  /* Navigation items spacing */
+  .nav-items {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .nav-items {
+      gap: 1.5rem;
+    }
+  }
+
+  /* Navigation item styling */
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nav-item:hover {
+    background-color: rgba(139, 92, 246, 0.1);
+  }
+
+  .nav-item.active {
+    background-color: rgba(139, 92, 246, 0.15);
+  }
+
+  .nav-icon {
+    color: #8b5cf6;
+  }
+
+  /* Original nav items */
+  /* .nav-items {
+    @apply flex items-center space-x-6;
+  } */
+
+  /* .nav-item {
+    @apply flex items-center cursor-pointer transition-all duration-300 rounded-full px-3 py-2;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  } */
+
+  .nav-item.active {
+    @apply bg-violet-100;
+  }
+
+  /* .nav-icon {
+    @apply h-5 w-5 text-violet-700 flex-shrink-0;
+  } */
+
+  .nav-label {
+    @apply ml-2 text-sm font-medium text-violet-700;
+    display: inline-block;
+  }
+
+  /* Profile dropdown */
+  .profile-dropdown {
+    @apply bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-white/30 p-1;
+    right: 0;
+    transform-origin: top right;
+  }
+
+  .dropdown-item {
+    @apply flex items-center px-3 py-2 text-sm text-violet-700 hover:bg-violet-50 rounded-lg transition-colors;
+  }
+
+  .dropdown-item-danger {
+    @apply flex items-center px-3 py-2 text-sm text-red-500 hover:bg-red-50 rounded-lg transition-colors;
+  }
+
+  /* Content spacing to account for floating navigation */
+  .content-container {
+    @apply px-4 max-w-screen-lg mx-auto;
+    padding-top: calc(6rem + env(safe-area-inset-top)); /* Increased spacing for floating nav */
+    margin-top: 0;
+  }
+
+  /* Online activity and Shot By sections */
+  .online-activity-section {
+    @apply mb-6 mt-4;
+  }
+
+  .shot-by-section {
+    @apply mb-6;
+  }
+
+  /* Letter compose form styles */
+  .letter-compose-form .signature-preview {
+    @apply transition-all duration-300;
+  }
+
+  .letter-compose-form .signature-preview:hover {
+    @apply shadow-inner;
+  }
+
+  /* Letter card styles */
+  .letter-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-white/50 mb-4 overflow-hidden;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.1), 0 4px 10px rgba(124, 58, 237, 0.08);
+  }
+
+  .letter-content {
+    @apply font-light leading-7 text-base text-gray-700;
+  }
+
+  .letter-content p {
+    @apply mb-6;
+  }
+
+  .signature {
+    @apply font-dancing text-3xl bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent mt-4;
+  }
+
+  .letter-title {
+    @apply text-center font-playfair text-xl font-semibold mb-5 text-purple-900;
+    @apply md:text-2xl md:mb-6;
+  }
+
+  .letter-salutation {
+    @apply text-left text-lg mb-4 text-gray-700;
+  }
+
+  .letter-closing {
+    @apply text-right text-lg mt-8 text-gray-700;
+  }
+
+  /* Chat bubble styles - FIXED SYNTAX ERROR */
+  .chat-bubble {
+    @apply relative rounded-2xl p-3 shadow-sm break-words;
+    @apply max-w-[85%] mb-2;
+    @apply md:max-w-[80%] md:p-4;
+  }
+
+  .chat-bubble.sent {
+    @apply bg-purple-100 ml-auto rounded-br-sm;
+  }
+
+  .chat-bubble.received {
+    @apply bg-white mr-auto rounded-bl-sm;
+  }
+
+  .quoted-message {
+    @apply bg-purple-50/50 border-l-2 border-purple-500 p-2 mb-2 rounded text-sm max-h-[60px] overflow-y-auto;
+    @apply md:p-3 md:mb-3 md:text-base md:max-h-[80px];
+  }
+
+  .tab-active {
+    @apply border-b-3 border-purple-500 text-purple-500 font-semibold;
+  }
+
+  .success-message {
+    @apply fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-500/90 text-white p-3 rounded-xl shadow-md 
+       flex items-center gap-2 z-50 animate-slide-up animate-fade-out max-w-[90%] text-sm;
+  }
+
+  .admin-badge {
+    @apply inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-2 py-0.5 rounded-full ml-2;
+  }
+
+  .real-time-indicator {
+    @apply inline-flex items-center text-xs text-green-600 font-medium;
+  }
+
+  .pulse-dot {
+    @apply relative inline-flex h-2 w-2 mr-1;
+  }
+
+  .pulse-dot:before {
+    content: "";
+    @apply absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping;
+  }
+
+  .pulse-dot:after {
+    content: "";
+    @apply relative inline-flex rounded-full h-2 w-2 bg-green-500;
+  }
+
+  .real-time-dot {
+    @apply relative flex h-2 w-2 mr-1;
+  }
+
+  .real-time-dot-ping {
+    @apply animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75;
+  }
+
+  .real-time-dot-core {
+    @apply relative inline-flex rounded-full h-2 w-2 bg-green-500;
+  }
+
+  /* New glassmorphism styles */
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-lg border border-white/30 shadow-lg;
+  }
+
+  .glass-nav {
+    @apply bg-transparent backdrop-blur-lg border-b border-white/30;
+  }
+
+  /* Animation classes */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.5s ease-in-out;
+  }
+
+  .slide-down {
+    animation: slideDown 0.5s ease-in-out;
+  }
+
+  .fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+
+  /* Letter card animations */
+  .letter-card {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  /* Reaction button animations */
+  .reaction-btn {
+    @apply transition-all duration-300 hover:scale-110;
+  }
+
+  .reaction-btn.active {
+    @apply text-pink-500;
+  }
+
+  /* Compose button animation */
+  .compose-btn {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Header hide/show animation */
+  .header-container {
+    @apply fixed top-0 left-0 right-0 z-50 transition-transform duration-300;
+  }
+
+  .header-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  /* Keyframes */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Delete animation */
+  .delete-animation {
+    animation: deleteAnim 0.5s ease-in-out forwards;
+  }
+
+  @keyframes deleteAnim {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.95);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+      height: 0;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  /* Admin panel styles */
+  .admin-sidebar {
+    @apply w-64 bg-white/90 backdrop-blur-md border-r border-violet-100 h-screen fixed left-0 top-0 z-40 transition-all duration-300 ease-in-out;
+    box-shadow: 4px 0 15px rgba(124, 58, 237, 0.05);
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .admin-sidebar-collapsed {
+    @apply -translate-x-full md:translate-x-0 md:w-20;
+  }
+
+  /* Add a mobile sidebar overlay */
+  .admin-sidebar-overlay {
+    @apply fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .admin-sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Improve mobile admin content */
+  .admin-content {
+    @apply ml-0 md:ml-64 transition-all duration-300 ease-in-out p-4 md:p-6;
+    padding-top: calc(1rem + env(safe-area-inset-top));
+  }
+
+  .admin-content-expanded {
+    @apply md:ml-20;
+  }
+
+  /* Improve admin card styles for mobile */
+  .admin-card {
+    @apply bg-white/90 backdrop-blur-md rounded-xl shadow-md border border-violet-100 p-4 md:p-6 mb-4 md:mb-6;
+  }
+
+  /* Improve admin nav items for touch targets */
+  .admin-nav-item {
+    @apply flex items-center gap-3 px-4 py-3 md:py-3 text-violet-700 hover:bg-violet-50 rounded-lg transition-all duration-200 mb-1;
+    min-height: 44px; /* Better touch target */
+  }
+
+  .admin-stat-card {
+    @apply bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-4 shadow-sm border border-violet-100;
+  }
+
+  .admin-table-container {
+    @apply rounded-xl overflow-hidden border border-violet-100 shadow-sm;
+  }
+
+  .admin-action-btn {
+    @apply p-2 rounded-lg transition-colors;
+  }
+
+  .admin-action-btn-edit {
+    @apply text-blue-500 hover:bg-blue-50;
+  }
+
+  .admin-action-btn-delete {
+    @apply text-red-500 hover:bg-red-50;
+  }
+
+  .admin-action-btn-view {
+    @apply text-violet-500 hover:bg-violet-50;
+  }
+
+  /* Improve admin table for mobile */
+  @media (max-width: 640px) {
+    .admin-table-container {
+      @apply overflow-x-auto;
+    }
+
+    .admin-table-container table {
+      min-width: 600px;
+    }
+
+    .admin-action-btn {
+      @apply p-1 h-8 w-8;
+      min-height: 32px;
+      min-width: 32px;
+    }
+  }
+
+  /* Add these new classes after the existing components */
+
+  /* Feed page specific styles for reduced spacing */
+  .filter-section {
+    @apply py-1;
+  }
+
+  .letter-list-section {
+    @apply space-y-3;
+  }
+
+  /* Adjust letter card spacing */
+  .letter-card {
+    @apply mb-3;
+  }
+
+  /* Mobile text size adjustments */
+  @media (max-width: 640px) {
+    .letter-title {
+      @apply text-lg mb-3;
+    }
+
+    .letter-content {
+      @apply text-sm leading-6;
+    }
+
+    .letter-salutation {
+      @apply text-base mb-3;
+    }
+
+    .letter-closing {
+      @apply text-base mt-6;
+    }
+
+    .signature {
+      @apply text-2xl mt-3;
+    }
+
+    .author-name {
+      @apply text-xs;
+    }
+
+    .author-headline {
+      @apply text-xs;
+    }
+
+    .timestamp {
+      @apply text-xs;
+    }
+
+    .comment-author {
+      @apply text-xs;
+    }
+
+    .comment-timestamp {
+      @apply text-xs;
+    }
+
+    .comment-text {
+      @apply text-xs;
+    }
+  }
+
+  /* Add animation styles for the navigation items */
+
+  /* Add these animation classes: */
+
+  @keyframes expandText {
+    from {
+      width: 0;
+      opacity: 0;
+    }
+    to {
+      width: auto;
+      opacity: 1;
+    }
+  }
+
+  .nav-text-expand {
+    animation: expandText 0.3s ease-out forwards;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* Add styles for active navigation items */
+  .nav-item-active {
+    background-color: rgba(139, 92, 246, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.15);
+  }
+
+  /* Add hover effect for navigation items */
+  .nav-item {
+    transition: all 0.2s ease;
+  }
+
+  .nav-item:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.1), 0 5px 10px rgba(139, 92, 246, 0.05);
+}
+
+/* Letter styling */
+.letter-title {
+  @apply font-playfair text-2xl font-semibold text-purple-900 mb-4;
+  font-size: 24px !important; /* Force consistent size */
+}
+
+.letter-salutation {
+  @apply text-lg text-gray-700 mb-4;
+  font-size: 18px !important; /* Force consistent size */
+}
+
+.letter-content {
+  @apply text-base text-gray-700 leading-relaxed mb-6;
+  font-size: 16px !important; /* Force consistent size */
+}
+
+.letter-closing {
+  @apply text-lg text-gray-700 mb-1;
+  font-size: 18px !important; /* Force consistent size */
+}
+
+.signature {
+  @apply font-dancing text-3xl bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent mt-4;
+  font-size: 24px !important; /* Force consistent size */
+}
+
+/* Author info styling */
+.author-name {
+  font-size: 18px !important; /* Force consistent size */
+}
+
+.author-headline {
+  font-size: 14px !important; /* Force consistent size */
+}
+
+.timestamp {
+  font-size: 12px !important; /* Force consistent size */
+}
+
+/* Comment styling */
+.comment-text {
+  font-size: 14px !important; /* Force consistent size */
+}
+
+/* Navigation styling */
+.nav-link {
+  font-size: 16px !important; /* Force consistent size */
+}
+
+/* Button text */
+.btn-text {
+  font-size: 14px !important; /* Force consistent size */
+}
+
+/* Enhanced floating card effect */
+.letter-card {
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.08), 0 5px 15px rgba(139, 92, 246, 0.04);
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.letter-card:hover {
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.12), 0 8px 20px rgba(139, 92, 246, 0.08);
+  transform: translateY(-5px);
+}
+
+/* Lettercraft section styling - lighter and brighter */
+.compose-letter-button {
+  background: linear-gradient(to right, #d8b4fe, #a78bfa);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(139, 92, 246, 0.2);
+}
+
+.compose-letter-button:hover {
+  background: linear-gradient(to right, #c4b5fd, #8b5cf6);
+  box-shadow: 0 6px 15px rgba(139, 92, 246, 0.3);
+}
+
+/* Dialog styling for Lettercraft */
+.letter-compose-form {
+  background: white;
+}
+
+.letter-compose-form input,
+.letter-compose-form textarea {
+  background: #ffffff;
+  border-color: #f3e8ff;
+}
+
+.letter-compose-form .signature-preview {
+  background: #ffffff;
+  border-color: #f3e8ff;
+  box-shadow: inset 0 1px 2px rgba(139, 92, 246, 0.05);
+}
+
+/* Full-screen PWA styling */
+@media all and (display-mode: fullscreen) {
+  body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  .floating-nav-container {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+/* Letter animation on homepage */
+.letter-animation {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.envelope-flap {
+  transform-origin: bottom;
+  animation: flapOpen 5s ease-in-out infinite;
+}
+
+@keyframes flapOpen {
+  0%,
+  30% {
+    transform: rotateX(0deg);
+  }
+  40%,
+  60% {
+    transform: rotateX(-60deg);
+  }
+  70%,
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.letter {
+  animation: letterRise 5s ease-in-out infinite;
+}
+
+@keyframes letterRise {
+  0%,
+  30% {
+    transform: translateY(0);
+  }
+  40%,
+  60% {
+    transform: translateY(-15px);
+  }
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.letter-line {
+  animation: lineAppear 5s ease-in-out infinite;
+}
+
+@keyframes lineAppear {
+  0%,
+  35% {
+    opacity: 0;
+  }
+  45%,
+  60% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Add a pulsing effect to the letter icon */
+.pulse-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Ensure PWA status bar is properly styled */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .floating-nav-container {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .content-container {
+    padding-top: calc(6rem + env(safe-area-inset-top));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Add this to your globals.css file */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
