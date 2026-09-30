@@ -1,0 +1,10 @@
+[build]
+  command = "npm install --include=dev --no-audit --no-fund && npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--include=dev --no-audit --no-fund"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
